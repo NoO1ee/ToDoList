@@ -265,16 +265,27 @@ internal class StartProgram
         do
         {
             Console.Write($"Hello {Green(name)}!\nHow old are you: ");
-            userage = int.Parse(Console.ReadLine()!);
-
-            if (userage <= 10)
+            if (int.TryParse(Console.ReadLine(), out userage))
             {
-                Console.WriteLine("You are a minor. Please get your parents..");
-                Thread.Sleep(500);
-                Console.Clear();
+                if (userage <= 10)
+                {
+                    Console.WriteLine("You are a minor. Please get your parents..");
+                    Thread.Sleep(500);
+                    Console.Clear();
+                }
+                else if(userage > 10)
+                    checkValid = true;
+
             }
             else
-                checkValid = true;
+            {
+                Console.Clear();
+                Console.WriteLine("Invalid age...");
+                Thread.Sleep(1000);
+                Console.Clear();
+                checkValid = false;
+
+            }
         } while (!checkValid);
 
         return userage;
@@ -312,21 +323,13 @@ internal class StartProgram
         Console.Write("Loading");
         Thread.Sleep(500);
 
-        Console.Write(".");
-        Thread.Sleep(500);
-
-
-        Console.Write(".");
-        Thread.Sleep(500);
-
-
-        Console.Write(".");
-        Thread.Sleep(500);
+        for (int i = 0; i < 3; i++)
+        {
+            Console.Write(".");
+            Thread.Sleep(500);
+        }
         Console.Clear();
+        Console.WriteLine(Green("Loading done!"));
 
-
-        Console.ForegroundColor = ConsoleColor.Green;
-        Console.WriteLine("Loading done!");
-        Console.ResetColor();
     }
 }
